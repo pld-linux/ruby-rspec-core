@@ -1,20 +1,15 @@
 #
 # Conditional build:
-%bcond_with	bootstrap		# build with boostrap
-%bcond_with	tests		# build without tests
+%bcond_without	tests		# build without tests
 
-%if %{with boostrap}
-%undefine	with_tests
-%endif
-
-# bootstrap: test needs rspec-core, however rspec-core depends on rspec-mocks
+# test needs rspec-core, however rspec-core depends on rspec-mocks
 # runtime part of rspec-mocks does not depend on rspec-core
 
 %define	gem_name	rspec-core
 Summary:	Rspec-2 runner and formatters
 Name:		ruby-%{gem_name}
 Version:	2.13.1
-Release:	0.1
+Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/gems/%{gem_name}-%{version}.gem
@@ -22,15 +17,14 @@ Source0:	http://rubygems.org/gems/%{gem_name}-%{version}.gem
 URL:		http://github.com/rspec/rspec-mocks
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
-%if %{with bootstrap}
-BuildRequires:	rubygem(ZenTest)
-BuildRequires:	rubygem(aruba)
-BuildRequires:	rubygem(nokogiri)
-BuildRequires:	rubygem(rake)
-BuildRequires:	rubygem(rspec-expectations)
-BuildRequires:	rubygem(rspec-mocks)
+%if %{with tests}
+BuildRequires:	ruby-ZenTest
+BuildRequires:	ruby-aruba
+BuildRequires:	ruby-nokogiri
+BuildRequires:	ruby-rake
+BuildRequires:	ruby-rspec-expectations
+BuildRequires:	ruby-rspec-mocks
 %endif
-Requires:	ruby(release)
 # Make the following installed by default
 # lib/rspec/core/rake_task
 Requires:	ruby-rake
@@ -91,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{ruby_vendorlibdir}/autotest
 %{ruby_vendorlibdir}/autotest/discover.rb
 %{ruby_vendorlibdir}/autotest/rspec2.rb
+%dir %{ruby_vendorlibdir}/rspec
 %{ruby_vendorlibdir}/rspec/autorun.rb
 %{ruby_vendorlibdir}/rspec/core.rb
 %{ruby_vendorlibdir}/rspec/core
