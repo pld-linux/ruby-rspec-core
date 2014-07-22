@@ -9,7 +9,7 @@
 Summary:	Rspec-2 runner and formatters
 Name:		ruby-%{gem_name}
 Version:	2.13.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/gems/%{gem_name}-%{version}.gem
