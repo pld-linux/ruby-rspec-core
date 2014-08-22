@@ -7,6 +7,7 @@
 
 %define	gem_name	rspec-core
 Summary:	Rspec-2 runner and formatters
+Summary(pl.UTF-8):	Kod uruchomieniowy i formatujący dla Rspec-2
 Name:		ruby-%{gem_name}
 Version:	2.13.1
 Release:	2
@@ -38,13 +39,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Behaviour Driven Development for Ruby.
 
-%package	doc
-Summary:	Documentation for %{name}
-Group:		Documentation
-Requires:	%{name} = %{version}-%{release}
+This package contains the runner and formatters for Rspec-2.
 
-%description	doc
-This package contains documentation for %{name}.
+%description -l pl.UTF-8
+Programowanie sterowane zachowaniem (Behaviour Driven Development) dla
+języka Ruby.
+
+Ten pakiet zawiera kod uruchomieniowy i formatujący dla Rspec-2.
 
 %prep
 %setup -q -n %{gem_name}-%{version}
@@ -89,8 +90,3 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_vendorlibdir}/rspec/autorun.rb
 %{ruby_vendorlibdir}/rspec/core.rb
 %{ruby_vendorlibdir}/rspec/core
-
-%if 0
-%files	doc
-%defattr(644,root,root,755)
-%endif
