@@ -5,15 +5,15 @@
 # test needs rspec-core, however rspec-core depends on rspec-mocks
 # runtime part of rspec-mocks does not depend on rspec-core
 
-%define	gem_name	rspec-core
+%define	pkgname	rspec-core
 Summary:	Rspec-2 runner and formatters
 Summary(pl.UTF-8):	Kod uruchomieniowy i formatujący dla Rspec-2
-Name:		ruby-%{gem_name}
+Name:		ruby-%{pkgname}
 Version:	2.13.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages
-Source0:	http://rubygems.org/gems/%{gem_name}-%{version}.gem
+Source0:	http://rubygems.org/gems/%{pkgname}-%{version}.gem
 # Source0-md5:	648122b9ca2f7e3df3ca16d930d87668
 URL:		http://github.com/rspec/rspec-mocks
 BuildRequires:	rpm-rubyprov
@@ -48,13 +48,16 @@ języka Ruby.
 Ten pakiet zawiera kod uruchomieniowy i formatujący dla Rspec-2.
 
 %prep
-%setup -q -n %{gem_name}-%{version}
+%setup -q -n %{pkgname}-%{version}
 
 # rpmlint
 grep -rl '^#![ \t]*%{_bindir}' ./lib| \
 	xargs sed -i -e '\@^#![ \t]*/usr/bin@d'
 
 %build
+# write .gemspec
+%__gem_helper spec
+
 %if %{with tests}
 # Test failure needs investigation...
 # There are is some missing template for Ruby 2.0.0:
@@ -64,16 +67,14 @@ ruby -rubygems -Ilib/ -S exe/rspec
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir}}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_specdir},%{_bindir}}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a exe/* $RPM_BUILD_ROOT%{_bindir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 # Rename autospec to avoid conflict with rspec 1.3
 # (anyway this script doesn't seem to be useful)
 mv $RPM_BUILD_ROOT%{_bindir}/autospec{,2}
-
-# cleanups
-#rm $RPM_BUILD_ROOT%{gem_instdir}/{.document,.gitignore,.treasure_map.rb,.rspec,.travis.yml,spec.txt,.yardopts}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -90,3 +91,4 @@ rm -rf $RPM_BUILD_ROOT
 %{ruby_vendorlibdir}/rspec/autorun.rb
 %{ruby_vendorlibdir}/rspec/core.rb
 %{ruby_vendorlibdir}/rspec/core
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
