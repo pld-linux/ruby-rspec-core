@@ -10,7 +10,7 @@ Summary:	Rspec-2 runner and formatters
 Summary(pl.UTF-8):	Kod uruchomieniowy i formatujący dla Rspec-2
 Name:		ruby-%{pkgname}
 Version:	2.13.1
-Release:	3
+Release:	4
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/gems/%{pkgname}-%{version}.gem
