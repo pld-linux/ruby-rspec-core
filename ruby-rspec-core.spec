@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	tests		# build without tests
+%bcond_with	tests		# run tests
 
 # test needs rspec-core, however rspec-core depends on rspec-mocks
 # runtime part of rspec-mocks does not depend on rspec-core
@@ -9,12 +9,12 @@
 Summary:	Rspec-2 runner and formatters
 Summary(pl.UTF-8):	Kod uruchomieniowy i formatujący dla Rspec-2
 Name:		ruby-%{pkgname}
-Version:	2.13.1
-Release:	4
+Version:	2.14.8
+Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/gems/%{pkgname}-%{version}.gem
-# Source0-md5:	648122b9ca2f7e3df3ca16d930d87668
+# Source0-md5:	70fbddcf0ab469b332a028ccc6565a33
 URL:		http://github.com/rspec/rspec-mocks
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
@@ -74,7 +74,7 @@ cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
 
 # Rename autospec to avoid conflict with rspec 1.3
 # (anyway this script doesn't seem to be useful)
-mv $RPM_BUILD_ROOT%{_bindir}/autospec{,2}
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/autospec{,2}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
