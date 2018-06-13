@@ -19,19 +19,15 @@ URL:		http://github.com/rspec/rspec-mocks
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
 %if %{with tests}
-BuildRequires:	ruby-ZenTest
-BuildRequires:	ruby-aruba
-BuildRequires:	ruby-nokogiri
 BuildRequires:	ruby-rake
-BuildRequires:	ruby-rspec-expectations
-BuildRequires:	ruby-rspec-mocks
+BuildRequires:	ruby-rspec-support >= 3.7.0
 %endif
 # Make the following installed by default
 # lib/rspec/core/rake_task
 Requires:	ruby-rake
-Suggests:	ruby-ZenTest
-Suggests:	ruby-mocha
-Suggests:	ruby-rr
+Suggests:	ruby-minitest >= 5.3
+Suggests:	ruby-mocha >= 0.13.0
+Suggests:	ruby-rr >= 1.0.4
 Suggests:	ruby-ruby-debug
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
