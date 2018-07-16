@@ -10,7 +10,7 @@ Summary:	Rspec-2 runner and formatters
 Summary(pl.UTF-8):	Kod uruchomieniowy i formatujący dla Rspec-2
 Name:		ruby-%{pkgname}
 Version:	3.7.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/gems/%{pkgname}-%{version}.gem
@@ -46,9 +46,7 @@ Ten pakiet zawiera kod uruchomieniowy i formatujący dla Rspec-2.
 %prep
 %setup -q -n %{pkgname}-%{version}
 
-# rpmlint
-grep -rl '^#![ \t]*%{_bindir}' ./exe | \
-	xargs sed -i -e '\@^#![ \t]*/usr/bin@d'
+%{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' exe/*
 
 %build
 # write .gemspec
